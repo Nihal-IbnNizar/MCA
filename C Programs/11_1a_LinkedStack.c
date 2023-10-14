@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 
 struct node{
 	int data;
@@ -25,17 +25,30 @@ void pop(){
 	}
 }
 
+void pop2(){
+	if(top==NULL){						//for displaying
+		printf("STACK IS EMPTY!!\n");
+	}
+	else{
+		printf("Stack is: ");
+		while(top!=NULL){
+			printf("%d\t",top->data);
+			top=top->next;
+		}
+	}
+}
+
 int menu(){
 	int ch;
 	printf("\n------STACK OPERATIONS-----");
-	printf("\nPush-1\nPop-2\nExit-3\nENTER YOUR CHOICE: ");
+	printf("\nPush-1\nPop-2\nDisplay-3\nExit-4\nENTER YOUR CHOICE: ");
 	scanf("%d",&ch);
 	return ch;
 }
 
 void process(){
 	int ch;
-	for(ch=menu();ch!=3;ch=menu()){
+	for(ch=menu();ch!=4;ch=menu()){
 		switch(ch){
 			case 1:
 				printf("Enter the element to push: ");
@@ -44,6 +57,11 @@ void process(){
 				break;
 			case 2:
 				pop();
+				break;
+			case 3:
+				pop2();  //displaying stack
+				break;
+			default:
 				break;
 		}
 	}
