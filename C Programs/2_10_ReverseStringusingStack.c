@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #define max 100
-int top, stack[max];
+int top; 
+char stack[max];
 
 void push(char x)
 {
@@ -22,7 +23,9 @@ void pop()
 
 int main()
 {
-    char str[] = "hello world";
+    char str[100];
+    printf("Enter the string: ");
+    scanf("%s",&str);
     // Reading the string to len 
     int len = strlen(str);
     int i; 
