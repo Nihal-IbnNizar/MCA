@@ -61,10 +61,10 @@ void delete(int e){
 	if(head==NULL){
 		printf("\nCIRCULAR LINKED LIST IS EMPTY!!");
 	}
-	else if(head->data==e && head->next==head){
+	else if(head->data==e && head->next==head){   //first element when only one element
 		head=NULL;
 	}
-	else if(head->data==e){
+	else if(head->data==e){  //first element with more than 1 element
 		t=head;
 		while(t->next!=head){
 			t=t->next;
@@ -74,13 +74,13 @@ void delete(int e){
 	}
 	else{
 		t=head;
-		while(t->next!=head && t->next->data!=e){
+		while(t->next!=head && t->next->data!=e){ 
 			t=t->next;
 		}
 		if(t->next==head){
 			printf("\nELEMENT NOT FOUND!!");
 		}
-		else{
+		else{									//intermediate or last
 			t->next=t->next->next;
 		}
 	}
