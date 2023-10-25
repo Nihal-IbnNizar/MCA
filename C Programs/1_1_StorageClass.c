@@ -20,4 +20,3 @@ int main()
 	printf("\n%d\n%d\n%d",a,b,c);
 	return 0;
 }
-

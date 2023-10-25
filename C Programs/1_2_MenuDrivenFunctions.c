@@ -15,21 +15,43 @@ void insert(int e)
 
 void delete()
 {
+	int i,j,del,flag=0;
+
 	if(pos==-1)
 	{
-		printf("ARRAY IS EMPTY!!");
+		printf("\nARRAY IS EMPTY!!\n");
 	}
 	else
 	{
-		printf("Deleted element: %d", a[pos--]);
+		//printf("Deleted element: %d", a[pos--]);    We can either just end the prgrm here by deleting the last element or choose the method below.
+		printf("\nEnter the element to be deleted: ");
+		scanf("%d",&del);
+
+		for(i=0;i<pos+1;i++){
+			if(a[i]==del){
+				flag=1;
+				break;
+			}
+		}
+		if(flag==1){
+			for(j=i;j<pos;j++){
+				a[j]=a[j+1];
+			} 
+			pos--;
+			printf("Deleted element %d\n",del);
+		}
+		else{
+			printf("Element not found in the array!!\n");
+		}
+
 	}
 }
 
-void search()
+void search()  //linear search
 {
 	if (pos==-1)
 	{
-		printf("Array is empty");
+		printf("Array is empty!!");
 	}
 	else
 	{
@@ -41,7 +63,10 @@ void search()
 			if(s==a[i])
 			{
 				printf("\nThe  value %d is found at position %d",s,pos);
-			}	
+			}
+			else{
+				printf("\nThe searched element is not found in the array!!\n");
+			}
 		}
 	}
 }
@@ -51,31 +76,26 @@ void sort()
     int i,j,temp;
     if(pos==-1)
     {
-        printf("ARRAY IS EMPTY!!");
+        printf("\nARRAY IS EMPTY!!\n");
     }
-    else
-    {
-    for(i=0;i<pos;i++)
-    {
-        for(j=0;j<pos;j++)
-        {
-            if(a[j]>a[j+1])
-            {
-                temp=a[j+1];
-                a[j+1]=a[j];
-                a[j]=temp;
-            }
-        }
-    }
-
-    printf("\nARRAY IS SORTED!!\n");
-
+    else{
+    	for(i=0;i<pos;i++){
+        	for(j=i+1;j<pos;j++){
+        	    if(a[i]>a[j]){
+        	        temp=a[i];
+    	            a[i]=a[j];
+    	            a[j]=temp;
+    	        }
+    	    }
+    	}
+		printf("\nARRAY IS SORTED!!\n");
     }
 }
 
 void disp()
 {
  int i;
+ printf("\nARRAY IS:-\n");
  for(i=0;i<=pos;i++)
     {
         printf("%d\t",a[i]);
