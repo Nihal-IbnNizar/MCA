@@ -18,5 +18,4 @@ int main(){
     *(ptr+i)='\0';                       //adding \0 to make it as string
     printf("\nThe entered string is : %s",ptr_new);
     return 0;
-	}
 }

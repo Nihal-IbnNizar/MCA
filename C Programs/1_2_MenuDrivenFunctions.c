@@ -55,7 +55,7 @@ void search()  //linear search
 	}
 	else
 	{
-		int i,s;
+		int i,s,found=0;
 		printf("\nEnter value to be searched:");
 		scanf("%d",&s);
 		for(i=0;i<pos+1;i++)
@@ -63,10 +63,13 @@ void search()  //linear search
 			if(s==a[i])
 			{
 				printf("\nThe  value %d is found at position %d",s,pos);
+				found=1;
+				break;
 			}
-			else{
-				printf("\nThe searched element is not found in the array!!\n");
-			}
+		}
+		if(found==0)
+		{
+			printf("\nThe searched element is not found in the array!!\n");
 		}
 	}
 }
@@ -80,7 +83,7 @@ void sort()
     }
     else{
     	for(i=0;i<pos;i++){
-        	for(j=i+1;j<pos;j++){
+        	for(j=i+1;j<=pos;j++){
         	    if(a[i]>a[j]){
         	        temp=a[i];
     	            a[i]=a[j];
@@ -100,6 +103,7 @@ void disp()
     {
         printf("%d\t",a[i]);
     }
+    printf("\n");
 }
 
 int menu()

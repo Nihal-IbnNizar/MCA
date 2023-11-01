@@ -1,5 +1,5 @@
 #include <stdio.h>
-//This code is not working in dev c++, used online compiler
+
 
 void addition(int row,int col, int matrix1[][col], int matrix2[][col], int result[][col])
 {

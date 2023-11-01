@@ -16,12 +16,15 @@ void push(int e){
 }
 
 void pop(){
-	if(top==NULL){
-		printf("STACK IS EMPTY!!\n");
-	}
-	else{
+	if(top!=NULL){
 		printf("Popped element: %d\n",top->data);
 		top=top->next;
+		//printf("STACK IS EMPTY!!\n");
+	}
+	else{
+		printf("STACK IS EMPTY!!\n");
+		// printf("Popped element: %d\n",top->data);
+		// top=top->next;
 	}
 }
 

@@ -14,7 +14,7 @@ int main(){
 	for(i=0;i<n;i++){
 		printf("Enter the elements: ");
 		scanf("%d",p+i);
-			sum=sum+ *p+i;
+			sum=sum+ *(p+i);
 	}
 	mean=sum/n;
 	printf("The mean is: %f",mean);
