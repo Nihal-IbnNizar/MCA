@@ -46,13 +46,35 @@ void sort_values(){
 				}
 			}
 		}
-		printf("\nLINKED LIST SORTED SUCCESSFULLY!!");
+		printf("\nSorting successfully completed by swapping values\n");
 	}
 }
 
-//void sort_address(){
-//	
-//}
+void sort_address(){
+	struct node *i = head;
+    struct node *t1 = head;
+    while (i->next != NULL){
+        struct node *t2 = i;
+        struct node *j = i->next;
+    while (j != NULL){
+        if (i->data > j->data){
+            t2->next = j->next;
+        if (head == i)
+            t1 = head = j;
+        else
+            t1->next = j;
+            j->next = i;
+            i = t1;
+        }
+        else
+            t2 = j;
+            j = j->next;
+    }
+    t1 = i;
+    i = i->next;
+    }
+ printf("\nSorting successfully completed by swapping addresses.\n");
+}
 
 void display(){
     struct node *t;
@@ -78,9 +100,9 @@ int sort(){
         case 1:
             sort_values();
             break;
-//        case 2:
-//            sort_address();
-//            break;
+       case 2:
+           sort_address();
+           break;
         default:
             menu();
     }
