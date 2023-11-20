@@ -27,20 +27,19 @@ void disp(struct polynomial p[],int d)
 		if(p[i].degree==0)
 		{
 			printf("%d",p[i].coefficient);
-			}
-			else
-			{
+		}
+		else
+		{
 			if(p[i].coefficient>0 && i<d)
-				{
-					printf("%dx^%d + ",p[i].coefficient,p[i].degree);
-					
-				}
-				else 					//(p[i].coefficient<0)
-				{
-					printf("%dx^%d - ",-p[i].coefficient,p[i].degree);
-				}
+			{
+				printf("%dx^%d + ",p[i].coefficient,p[i].degree);
+			}
+			else 					//(p[i].coefficient<0)
+			{
+				printf("%dx^%d - ",-p[i].coefficient,p[i].degree);
 			}
 		}
+	}
 }
 
 int add(struct polynomial p1[],int d1,struct polynomial p2[],int d2,struct polynomial result[]){

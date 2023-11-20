@@ -18,7 +18,7 @@ void disp(int a[], int size)
     }
     printf("\n");
 }
-void sort(int a[], int size)
+void sort(int a[], int size)    //Bubble Sort
 {
 	int i,j;
     for (i = 0; i<size-1; i++)
