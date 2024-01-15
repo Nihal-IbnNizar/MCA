@@ -37,8 +37,8 @@ public class P3_Mcomplex {
     public static void main(String args[]){
 
         Complex p,q,r;
-        p.new Complex();
-        q.new Complex();
+        p= new Complex();
+        q= new Complex();
 
         p.read();
         q.read();
