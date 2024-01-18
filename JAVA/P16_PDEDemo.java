@@ -1,5 +1,5 @@
 import java.io.*;
-class PDEDemo{
+class P16_PDEDemo{
     public static void main(String[] args) {
         int a,b,c;
         DataInputStream din= new DataInputStream(System.in);

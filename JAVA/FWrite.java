@@ -14,9 +14,10 @@ class FWrite {
             System.out.println("Enter data/ 'quit' to terminate.");
             data = s.nextLine();
             while(!data.equals("quit")){
-                //data = data +"\n";
+                data = data +"\n";
                 fout.write(data.getBytes());
                 //fout.write("\n".getBytes());
+                data = s.nextLine();
             }
             fout.close();
         }
