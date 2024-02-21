@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -23,3 +24,30 @@ class DBSelect {
   }
 }
 
+=======
+import java.io.*;
+import java.util.*;
+import java.sql.*;
+
+class DBSelect {
+   public static void main(String args[]) {
+	Connection con;
+	Statement st;
+	ResultSet rs;
+	try {
+	  Class.forName("com.mysql.jdbc.Driver");
+	  con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ems_db?characterEncoding=utf8","root","");
+	  st = con.createStatement();
+	  String str = "select * from emp";
+	 rs = st.executeQuery(str);
+	 while(rs.next()) {
+		System.out.println(rs.getString("eno") + "  " + rs.getString("ename") + "  " + rs.getString("esal"));
+	  }
+ 	}
+	catch(Exception e) {
+		System.out.println("Error " + e);
+	}
+  }
+}
+
+>>>>>>> 206f68cff34891f990a614afb259de80a9fc2562
