@@ -36,7 +36,3 @@ class DBInsert {
 	}
   }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 206f68cff34891f990a614afb259de80a9fc2562
