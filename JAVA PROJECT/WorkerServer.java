@@ -1,54 +1,81 @@
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WorkerServer {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/workers_db?characterEncoding=utf8";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "";
+
     public static void main(String args[]) {
-        ServerSocket ss;
-        Socket as;
-        DataInputStream sin;
-        DataOutputStream sout;
         try {
-            ss = new ServerSocket(1234);
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+            ServerSocket ss = new ServerSocket(1234);
             System.out.println("Server started. Waiting for a client...");
 
-            as = ss.accept();
-            System.out.println("Client connected.");
-
-            sin = new DataInputStream(as.getInputStream());
-            sout = new DataOutputStream(as.getOutputStream());
-
-            Scanner scanner = new Scanner(System.in);
-
-            int choice;
-
             while (true) {
-                sout.writeUTF("Welcome to the Worker Registration System.\n1. Register as a worker\n2. Find worker\nEnter your choice:");
-                choice = sin.readInt(); // Read integer choice from client
-                System.out.println("Client says: " + choice);
+                Socket as = ss.accept();
+                System.out.println("Client connected.");
 
-                if (choice == 1) {
-                    // Register as a worker
-                    sout.writeUTF("Enter name:");
-                    // Similarly, read other details like age, gender, job, contact details
-                } else if (choice == 2) {
-                    // Find worker
-                    sout.writeUTF("What type of worker do you require?\n1. Carpenter\n2. Plumber\n3. Cleaner\nEnter your choice:");
-                    // Similarly, handle the logic for finding worker based on the client's choice
-                } else if (choice == -1) {
-                    // If client requests to quit
-                    System.out.println("Client is closing...");
-                    break;
+                BufferedReader sin = new BufferedReader(new InputStreamReader(as.getInputStream()));
+                PrintWriter sout = new PrintWriter(as.getOutputStream(), true);
+
+                sout.println("What worker are you searching for?");
+                sout.println("1. Carpenter");
+                sout.println("2. Plumber");
+                sout.println("3. Electrician");
+                sout.println("4. Mechanic");
+                sout.println("5. Mason");
+                sout.println("6. Welder");
+                sout.println("7. Maintenance Worker");
+                sout.println("Enter your choice:");
+
+                String choice = sin.readLine();
+                if (choice != null && choice.matches("[1-7]")) {
+                    String job = getJobFromChoice(choice);
+                    if (job != null) {
+                        String query = "SELECT * FROM workers WHERE job = ?";
+                        try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
+                            preparedStatement.setString(1, job);
+                            ResultSet resultSet = preparedStatement.executeQuery();
+                            // Send worker information to the client
+                            while (resultSet.next()) {
+                                String workerInfo = resultSet.getString("name") + ", " +
+                                                    resultSet.getInt("age") + ", " +
+                                                    resultSet.getString("gender") + ", " +
+                                                    resultSet.getDouble("wage") + ", " +
+                                                    resultSet.getString("contact");
+                                sout.println(workerInfo);
+                            }
+                        }
+                    } else {
+                        sout.println("Invalid choice.");
+                    }
                 } else {
-                    sout.writeUTF("Invalid choice.");
+                    sout.println("Invalid choice.");
                 }
+
+                as.close();
             }
 
-            as.close();
-            ss.close();
-            scanner.close();
-        } catch (IOException e) {
-            System.out.println(e);
+        } catch (IOException | ClassNotFoundException | SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
+    }
+
+    private static String getJobFromChoice(String choice) {
+        Map<String, String> jobMap = new HashMap<>();
+        jobMap.put("1", "Carpenter");
+        jobMap.put("2", "Plumber");
+        jobMap.put("3", "Electrician");
+        jobMap.put("4", "Mechanic");
+        jobMap.put("5", "Mason");
+        jobMap.put("6", "Welder");
+        jobMap.put("7", "Maintenance Worker");
+        return jobMap.get(choice);
     }
 }

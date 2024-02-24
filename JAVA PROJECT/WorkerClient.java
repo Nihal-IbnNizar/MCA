@@ -17,20 +17,20 @@ public class WorkerClient {
             Scanner scanner = new Scanner(System.in);
 
             String received;
-            String input;
+            String choice = ""; // Initialize choice variable
 
             while (true) {
-                received = sin.readLine();
-                System.out.println("Server says: " + received);
-
-                if (received.equals("Enter your choice:")) {
-                    System.out.print("Client: ");
-                    input = scanner.nextLine(); // Read user input
-                    sout.println(input); // Send input to server
-                } else if (received.startsWith("Worker Details:")) {
-                    System.out.println(received);
-                } else if (received.equalsIgnoreCase("quit")) {
-                    System.out.println("Server is closing...");
+                while ((received = sin.readLine()) != null) {
+                    System.out.println("Server says: " + received);
+                    if (received.startsWith("Enter your choice:")) {
+                        System.out.print("Client: ");
+                        choice = scanner.nextLine(); // Read user input
+                        sout.println(choice); // Send input to server
+                        break;
+                    }
+                }
+                if ("quit".equalsIgnoreCase(choice)) {
+                    System.out.println("Client is closing...");
                     break;
                 }
             }
