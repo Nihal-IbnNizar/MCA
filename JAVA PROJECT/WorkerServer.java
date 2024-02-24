@@ -11,20 +11,29 @@ public class WorkerServer {
 
     public static void main(String args[]) {
         try {
+            // Establish database connection
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            System.out.println("Database connection established.");
 
+            // Start server socket
             ServerSocket ss = new ServerSocket(1234);
             System.out.println("Server started. Waiting for a client...");
 
             while (true) {
+                // Accept client connection
                 Socket as = ss.accept();
                 System.out.println("Client connected.");
 
+                // Set up input and output streams for communication with client
                 BufferedReader sin = new BufferedReader(new InputStreamReader(as.getInputStream()));
                 PrintWriter sout = new PrintWriter(as.getOutputStream(), true);
 
-                sout.println("What worker are you searching for?");
+                // Send menu options to client
+                sout.println("=================================================================");
+                sout.println("\t\tWelcome to Worker Search System!");
+                sout.println("=================================================================");
+                sout.println("\nAvailable Worker Categories:");
                 sout.println("1. Carpenter");
                 sout.println("2. Plumber");
                 sout.println("3. Electrician");
@@ -32,8 +41,9 @@ public class WorkerServer {
                 sout.println("5. Mason");
                 sout.println("6. Welder");
                 sout.println("7. Maintenance Worker");
-                sout.println("Enter your choice:");
+                sout.println("\nPlease enter the number corresponding to the worker category:");
 
+                // Receive client's choice
                 String choice = sin.readLine();
                 if (choice != null && choice.matches("[1-7]")) {
                     String job = getJobFromChoice(choice);
@@ -43,12 +53,13 @@ public class WorkerServer {
                             preparedStatement.setString(1, job);
                             ResultSet resultSet = preparedStatement.executeQuery();
                             // Send worker information to the client
+                            sout.println("\nMatching Workers for " + job + ":");
                             while (resultSet.next()) {
                                 String workerInfo = resultSet.getString("name") + ", " +
-                                                    resultSet.getInt("age") + ", " +
+                                                    resultSet.getInt("age") + " years old, " +
                                                     resultSet.getString("gender") + ", " +
-                                                    resultSet.getDouble("wage") + ", " +
-                                                    resultSet.getString("contact");
+                                                    "earning INR " + resultSet.getDouble("wage") + " per day, " +
+                                                    "contact: " + resultSet.getString("contact");
                                 sout.println(workerInfo);
                             }
                         }
@@ -56,10 +67,12 @@ public class WorkerServer {
                         sout.println("Invalid choice.");
                     }
                 } else {
-                    sout.println("Invalid choice.");
+                    sout.println("Invalid choice. Please enter a number between 1 and 7.");
                 }
 
+                // Close client connection
                 as.close();
+                System.out.println("Client connection closed.");
             }
 
         } catch (IOException | ClassNotFoundException | SQLException e) {
@@ -69,13 +82,13 @@ public class WorkerServer {
 
     private static String getJobFromChoice(String choice) {
         Map<String, String> jobMap = new HashMap<>();
-        jobMap.put("1", "Carpenter");
-        jobMap.put("2", "Plumber");
-        jobMap.put("3", "Electrician");
-        jobMap.put("4", "Mechanic");
-        jobMap.put("5", "Mason");
-        jobMap.put("6", "Welder");
-        jobMap.put("7", "Maintenance Worker");
+        jobMap.put("'1'", "Carpenter");
+        jobMap.put("'2'", "Plumber");
+        jobMap.put("'3'", "Electrician");
+        jobMap.put("'4'", "Mechanic");
+        jobMap.put("'5'", "Mason");
+        jobMap.put("'6'", "Welder");
+        jobMap.put("'7'", "Maintenance Worker");
         return jobMap.get(choice);
     }
 }
