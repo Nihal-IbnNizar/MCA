@@ -23,7 +23,7 @@ public class WorkerClient {
                 received = sin.readLine();
                 if (received != null) {
                     System.out.println(received);
-                    if (received.startsWith("Please enter the number corresponding to the worker category:")) {
+                    if (received.startsWith("Please enter the number corresponding to the worker category:") || received.startsWith("Do you want to try another job? (yes/no):")) {
                         System.out.print("Client: ");
                         choice = scanner.nextLine(); // Read user input
                         sout.println(choice); // Send input to server
