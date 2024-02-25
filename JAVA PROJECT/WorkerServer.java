@@ -1,8 +1,6 @@
 import java.io.*;
 import java.net.*;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class WorkerServer {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/workers_db?characterEncoding=utf8";
@@ -30,22 +28,11 @@ public class WorkerServer {
                 PrintWriter sout = new PrintWriter(as.getOutputStream(), true);
 
                 // Send menu options to client
-                sout.println("=================================================================");
-                sout.println("\t\tWelcome to Worker Search System!");
-                sout.println("=================================================================");
-                sout.println("\nAvailable Worker Categories:");
-                sout.println("1. Carpenter");
-                sout.println("2. Plumber");
-                sout.println("3. Electrician");
-                sout.println("4. Mechanic");
-                sout.println("5. Mason");
-                sout.println("6. Welder");
-                sout.println("7. Maintenance Worker");
-                sout.println("\nPlease enter the number corresponding to the worker category:");
+                sendMenuOptions(sout);
 
                 // Receive client's choice
                 String choice = sin.readLine();
-                if (choice != null && choice.matches("[1-7]")) {
+                if (isValidChoice(choice)) {
                     String job = getJobFromChoice(choice);
                     if (job != null) {
                         String query = "SELECT * FROM workers WHERE job = ?";
@@ -80,15 +67,46 @@ public class WorkerServer {
         }
     }
 
+    private static void sendMenuOptions(PrintWriter sout) {
+        sout.println("=================================================================");
+        sout.println("\t\tWelcome to Worker Search System!");
+        sout.println("=================================================================");
+        sout.println("\nAvailable Worker Categories:");
+        sout.println("1. Carpenter");
+        sout.println("2. Plumber");
+        sout.println("3. Electrician");
+        sout.println("4. Mechanic");
+        sout.println("5. Mason");
+        sout.println("6. Welder");
+        sout.println("7. Maintenance Worker");
+        //sout.println("Enter your choice:");
+
+        sout.println("\nPlease enter the number corresponding to the worker category:");
+        // sout.println("=================================================================");
+    }
+
+    private static boolean isValidChoice(String choice) {
+        return choice != null && choice.matches("[1-7]");
+    }
+
     private static String getJobFromChoice(String choice) {
-        Map<String, String> jobMap = new HashMap<>();
-        jobMap.put("'1'", "Carpenter");
-        jobMap.put("'2'", "Plumber");
-        jobMap.put("'3'", "Electrician");
-        jobMap.put("'4'", "Mechanic");
-        jobMap.put("'5'", "Mason");
-        jobMap.put("'6'", "Welder");
-        jobMap.put("'7'", "Maintenance Worker");
-        return jobMap.get(choice);
+        switch (choice) {
+            case "1":
+                return "Carpenter";
+            case "2":
+                return "Plumber";
+            case "3":
+                return "Electrician";
+            case "4":
+                return "Mechanic";
+            case "5":
+                return "Mason";
+            case "6":
+                return "Welder";
+            case "7":
+                return "Maintenance Worker";
+            default:
+                return null;
+        }
     }
 }
