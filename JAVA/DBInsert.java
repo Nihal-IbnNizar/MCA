@@ -19,9 +19,8 @@ class DBInsert {
 	  no = s.nextInt();
 	  s.nextLine();
 	  name = s.nextLine();
-
-
 	  sal = s.nextFloat();
+	  
 	  //String str = "insert into emp values(2,'ddd',40000)";
 	  String str = "insert into emp values(";
 	  str = str + no + ",'";
